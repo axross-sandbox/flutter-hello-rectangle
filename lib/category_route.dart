@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import './category.dart';
+import './category_row.dart';
+import './unit.dart';
 
-const _categoryNames = [
-  'Length',
-  'Area',
-  'Volume',
-  'Mass',
-  'Time',
-  'Digital Storage',
-  'Energy',
-  'Currency',
-];
+class CategoryRoute extends StatefulWidget {
+  @override
+  _CategoryRouteState createState() => _CategoryRouteState();
+}
 
-class CategoryRoute extends StatelessWidget {
+class _CategoryRouteState extends State<CategoryRoute> {
+  final List<CategoryRow> _categoryRows = _categories
+      .map((category) => CategoryRow(
+            name: category.name,
+            color: category.color,
+            icon: Icons.cake,
+            units: _retrieveUnitList(category.name),
+          ))
+      .toList();
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,33 +37,64 @@ class CategoryRoute extends StatelessWidget {
         ),
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8),
         child: _buildCategoryWidgets(true),
       ),
     );
   }
+
+  Widget _buildCategoryWidgets(bool isPortrait) => isPortrait
+      ? ListView.builder(
+          itemBuilder: (BuildContext context, int index) =>
+              _categoryRows[index],
+          itemCount: _categoryRows.length,
+        )
+      : GridView.count(
+          crossAxisCount: 2,
+          childAspectRatio: 3.0,
+          children: _categoryRows,
+        );
 }
 
-Widget _buildCategoryWidgets(bool portrait) {
-  if (portrait) {
-    return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => Category(
-            name: _categoryNames[index],
-            color: Colors.blueAccent,
-            icon: Icons.cake,
+const _categories = [
+  Category(
+    name: 'Length',
+    color: Colors.teal,
+  ),
+  Category(
+    name: 'Area',
+    color: Colors.orange,
+  ),
+  Category(
+    name: 'Volume',
+    color: Colors.pinkAccent,
+  ),
+  Category(
+    name: 'Mass',
+    color: Colors.blueAccent,
+  ),
+  Category(
+    name: 'Time',
+    color: Colors.yellow,
+  ),
+  Category(
+    name: 'Digital Storage',
+    color: Colors.greenAccent,
+  ),
+  Category(
+    name: 'Energy',
+    color: Colors.purpleAccent,
+  ),
+  Category(
+    name: 'Currency',
+    color: Colors.red,
+  ),
+];
+
+List<Unit> _retrieveUnitList(String categoryName) => List.generate(
+      10,
+      (index) => Unit(
+            name: '$categoryName Unit ${index + 1}',
+            conversion: (index + 1).toDouble(),
           ),
-      itemCount: _categoryNames.length,
     );
-  } else {
-    return GridView.count(
-      crossAxisCount: 2,
-      childAspectRatio: 3.0,
-      children: _categoryNames
-          .map((categoryName) => Category(
-                name: categoryName,
-                color: Colors.blueAccent,
-                icon: Icons.cake,
-              ))
-          .toList(),
-    );
-  }
-}

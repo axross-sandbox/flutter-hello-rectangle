@@ -18,11 +18,6 @@ class _CategoryRouteState extends State<CategoryRoute> {
           ))
       .toList();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

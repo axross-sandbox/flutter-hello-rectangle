@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import './converter_route.dart';
-import './unit.dart';
+import './category.dart';
 
 const _height = 100.0;
 
 class CategoryRow extends StatelessWidget {
+  final Category category;
   final IconData icon;
-  final ColorSwatch color;
-  final String name;
-  final List<Unit> units;
+  final ValueChanged<Category> onTap;
 
   CategoryRow({
     Key key,
-    @required this.name,
+    @required this.category,
     @required this.icon,
-    @required this.color,
-    @required this.units,
-  })  : assert(name != null),
+    @required this.onTap,
+  })  : assert(category != null),
         assert(icon != null),
-        assert(color != null),
-        assert(units != null),
+        assert(onTap != null),
         super(key: key);
 
   @override
@@ -30,9 +26,9 @@ class CategoryRow extends StatelessWidget {
           height: _height,
           child: InkWell(
             borderRadius: BorderRadius.circular(_height / 2),
-            highlightColor: color,
-            splashColor: color,
-            onTap: () => _navigateToConverter(context),
+            highlightColor: category.color,
+            splashColor: category.color,
+            onTap: () => onTap(category),
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Row(
@@ -47,7 +43,7 @@ class CategoryRow extends StatelessWidget {
                   ),
                   Center(
                     child: Text(
-                      name,
+                      category.name,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline,
                     ),
@@ -59,15 +55,15 @@ class CategoryRow extends StatelessWidget {
         ),
       );
 
-  void _navigateToConverter(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute<Null>(
-        builder: (BuildContext context) => ConverterRoute(
-              color: color,
-              name: name,
-              units: units,
-            ),
-      ),
-    );
-  }
+  // void _navigateToConverter(BuildContext context) {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute<Null>(
+  //       builder: (BuildContext context) => ConverterRoute(
+  //             color: color,
+  //             name: name,
+  //             units: units,
+  //           ),
+  //     ),
+  //   );
+  // }
 }

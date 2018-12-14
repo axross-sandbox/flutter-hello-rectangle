@@ -1,50 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart' show required;
+import './category.dart';
 import './unit.dart';
 
-class ConverterRoute extends StatefulWidget {
-  final String name;
-  final ColorSwatch color;
-  final List<Unit> units;
+class UnitConverter extends StatefulWidget {
+  final Category category;
 
-  const ConverterRoute({
-    @required this.name,
-    @required this.color,
-    @required this.units,
-  })  : assert(name != null),
-        assert(color != null),
-        assert(units != null);
+  const UnitConverter({
+    @required this.category,
+  }) : assert(category != null);
 
   @override
-  _ConverterRouteState createState() => _ConverterRouteState();
+  _UnitConverterState createState() => _UnitConverterState();
 }
 
-class _ConverterRouteState extends State<ConverterRoute> {
+class _UnitConverterState extends State<UnitConverter> {
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          elevation: 1.0,
-          title: Text(widget.name, style: Theme.of(context).textTheme.display1),
-          centerTitle: true,
-          backgroundColor: widget.color,
-        ),
-        body: Container(
+  Widget build(BuildContext context) => SingleChildScrollView(
+        child: Padding(
           padding: EdgeInsets.all(16),
           child: Column(
-            children: <Widget>[
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
               _ConverterGroup(
                 labelText: 'From',
-                units: widget.units,
+                units: widget.category.units,
               ),
               _CompareArrows(),
               _ConverterGroup(
                 labelText: 'To',
-                units: widget.units,
+                units: widget.category.units,
               ),
             ],
           ),
         ),
       );
+
+  // Scaffold(
+  //       appBar: AppBar(
+  //         elevation: 1.0,
+  //         title: Text(widget.name, style: Theme.of(context).textTheme.display1),
+  //         centerTitle: true,
+  //         backgroundColor: widget.color,
+  //       ),
+  //       body: Container(
+  //         padding: EdgeInsets.all(16),
+  //         child: Column(
+  //           children: <Widget>[
+  //             _ConverterGroup(
+  //               labelText: 'From',
+  //               units: widget.units,
+  //             ),
+  //             _CompareArrows(),
+  //             _ConverterGroup(
+  //               labelText: 'To',
+  //               units: widget.units,
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     );
 }
 
 class _ConverterGroup extends StatefulWidget {

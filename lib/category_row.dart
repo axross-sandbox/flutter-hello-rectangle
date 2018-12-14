@@ -20,7 +20,7 @@ class CategoryRow extends StatelessWidget {
         super(key: key);
 
   @override
-  Widget build(BuildContext context) => Material(
+  Widget build(context) => Material(
         color: Colors.transparent,
         child: Container(
           height: _height,
@@ -54,16 +54,4 @@ class CategoryRow extends StatelessWidget {
           ),
         ),
       );
-
-  // void _navigateToConverter(BuildContext context) {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute<Null>(
-  //       builder: (BuildContext context) => ConverterRoute(
-  //             color: color,
-  //             name: name,
-  //             units: units,
-  //           ),
-  //     ),
-  //   );
-  // }
 }

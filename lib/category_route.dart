@@ -21,7 +21,7 @@ class _CategoryRouteState extends State<CategoryRoute> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Backdrop(
       category: _category,
       frontPanel: UnitConverter(category: _category),
@@ -31,52 +31,42 @@ class _CategoryRouteState extends State<CategoryRoute> {
           right: 8,
           bottom: 48,
         ),
-        child: _buildCategoryWidgets(true),
+        child: _buildCategoryWidgets(),
       ),
       frontTitle: Text('Unit Converter'),
       backTitle: Text('Select a Category'),
     );
-
-    // return Scaffold(
-    //   backgroundColor: Colors.green[100],
-    //   appBar: AppBar(
-    //     backgroundColor: Colors.transparent,
-    //     elevation: 0,
-    //     centerTitle: true,
-    //     title: Text(
-    //       'Unit Converter',
-    //       style: const TextStyle(fontSize: 30.0, color: Colors.black),
-    //     ),
-    //   ),
-    //   body: Container(
-    //     padding: EdgeInsets.symmetric(horizontal: 8),
-    //     child: _buildCategoryWidgets(true),
-    //   ),
-    // );
   }
 
-  Widget _buildCategoryWidgets(bool isPortrait) => isPortrait
-      ? ListView.builder(
-          itemBuilder: (BuildContext context, int index) => _categories
-              .map((category) => CategoryRow(
-                    category: category,
-                    icon: Icons.cake,
-                    onTap: _onTapCategory,
-                  ))
-              .toList()[index],
-          itemCount: _categories.length,
-        )
-      : GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 3.0,
-          children: _categories
-              .map((category) => CategoryRow(
-                    category: category,
-                    icon: Icons.cake,
-                    onTap: _onTapCategory,
-                  ))
-              .toList(),
-        );
+  Widget _buildCategoryWidgets() => LayoutBuilder(
+        builder: (context, constraints) {
+          final size = new Size(constraints.maxWidth, constraints.maxHeight);
+          final shouldBeList = size.width < 320 * 2;
+
+          return shouldBeList
+              ? ListView.builder(
+                  itemBuilder: (context, index) => _categories
+                      .map((category) => CategoryRow(
+                            category: category,
+                            icon: Icons.cake,
+                            onTap: _onTapCategory,
+                          ))
+                      .toList()[index],
+                  itemCount: _categories.length,
+                )
+              : GridView.count(
+                  crossAxisCount: size.width ~/ 320,
+                  childAspectRatio: size.width / (size.width ~/ 320) / 100,
+                  children: _categories
+                      .map((category) => CategoryRow(
+                            category: category,
+                            icon: Icons.cake,
+                            onTap: _onTapCategory,
+                          ))
+                      .toList(),
+                );
+        },
+      );
 
   void _onTapCategory(Category category) {
     setState(() {

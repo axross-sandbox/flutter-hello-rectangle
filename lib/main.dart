@@ -7,7 +7,7 @@ void main() {
 
 class UnitConverter extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(context) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Unit Converter',
         theme: ThemeData(

@@ -65,7 +65,7 @@ class _BackdropState extends State<Backdrop>
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(context) => Scaffold(
         appBar: AppBar(
           backgroundColor: widget.category.color,
           elevation: 0.0,
@@ -172,7 +172,7 @@ class _BackdropTitle extends AnimatedWidget {
         super(key: key, listenable: listenable);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     final animation = listenable;
 
     return DefaultTextStyle(
@@ -223,7 +223,7 @@ class _BackdropPanel extends StatelessWidget {
         super(key: key);
 
   @override
-  Widget build(BuildContext context) => Material(
+  Widget build(context) => Material(
         elevation: 2.0,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),

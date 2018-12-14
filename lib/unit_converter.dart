@@ -16,50 +16,38 @@ class UnitConverter extends StatefulWidget {
 
 class _UnitConverterState extends State<UnitConverter> {
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _ConverterGroup(
-                labelText: 'From',
-                units: widget.category.units,
-              ),
-              _CompareArrows(),
-              _ConverterGroup(
-                labelText: 'To',
-                units: widget.category.units,
-              ),
-            ],
-          ),
+  Widget build(context) => Padding(
+        padding: EdgeInsets.all(16),
+        child: OrientationBuilder(
+          builder: (context, orientation) {
+            final body = Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _ConverterGroup(
+                  labelText: 'From',
+                  units: widget.category.units,
+                ),
+                _CompareArrows(),
+                _ConverterGroup(
+                  labelText: 'To',
+                  units: widget.category.units,
+                ),
+              ],
+            );
+
+            return SingleChildScrollView(
+              child: orientation == Orientation.portrait
+                  ? body
+                  : Center(
+                      child: Container(
+                        width: 450,
+                        child: body,
+                      ),
+                    ),
+            );
+          },
         ),
       );
-
-  // Scaffold(
-  //       appBar: AppBar(
-  //         elevation: 1.0,
-  //         title: Text(widget.name, style: Theme.of(context).textTheme.display1),
-  //         centerTitle: true,
-  //         backgroundColor: widget.color,
-  //       ),
-  //       body: Container(
-  //         padding: EdgeInsets.all(16),
-  //         child: Column(
-  //           children: <Widget>[
-  //             _ConverterGroup(
-  //               labelText: 'From',
-  //               units: widget.units,
-  //             ),
-  //             _CompareArrows(),
-  //             _ConverterGroup(
-  //               labelText: 'To',
-  //               units: widget.units,
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     );
 }
 
 class _ConverterGroup extends StatefulWidget {
@@ -112,7 +100,7 @@ class _ConverterGroupState extends State<_ConverterGroup> {
   }
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(context) => Container(
         padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -161,8 +149,6 @@ class _ConverterGroupState extends State<_ConverterGroup> {
                         )
                         .toList(),
                     onChanged: (Unit unit) {
-                      print(unit.name);
-
                       setState(() {
                         _selectedUnit = unit;
                       });
@@ -182,7 +168,7 @@ class _ConverterGroupState extends State<_ConverterGroup> {
 
 class _CompareArrows extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return RotatedBox(
       quarterTurns: 1,
       child: Center(
